@@ -1,24 +1,46 @@
-import logo from './logo.svg';
+
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import MainContext from "./context/MainContext";
+import Header from "./components/Header";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import IndexPage from "./pages/IndexPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import TopicPage from "./pages/TopicPage";
+import {useEffect, useState} from "react";
+
+
+
 
 function App() {
+
+  const [topics, setTopics] = useState([])
+
+  useEffect(()=>{
+    console.log('Temos', topics)
+  },[topics])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <MainContext.Provider value={{
+        topics,
+        setTopics
+      }}>
+
+        <BrowserRouter>
+
+          <Header />
+          <div>FORUMAS pagrindinis puslapis</div>
+          <Routes>
+            <Route path='/' element={<IndexPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/register' element={<RegisterPage />} />
+            <Route path='/tema/:topic' element={<TopicPage />} />
+          </Routes>
+
+        </BrowserRouter>
+
+      </MainContext.Provider>
   );
 }
 

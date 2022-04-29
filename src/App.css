@@ -1,38 +1,58 @@
+* {
+  box-sizing: border-box;
+}
 .App {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.flex {
+  display:flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+}
+.flex-col {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.flex-col-rev {
+  display:flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+}
+.gap {gap: 10px;}
+.wrap{flex-wrap: wrap}
+.margin {margin:50px}
+.left {align-items: flex-start}
+.w100proc {width: 100%}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Header{
+  background-color: steelblue;
+  padding: 25px;
+  border: 1px solid black;
+}
+.registration{
+  background-color: silver;
+}
+.topic-card {
+  margin: 5px;
+  padding: 10px;
+  background-color: cadetblue;
+  border: 1px solid black;
+}
+input {
+  border-radius: 10px;
+  padding: 4px 20px;
+  /*border: transparent;*/
+  background-color: #d0d0d0;
+}
+.no-border {
+  border: silver
 }
