@@ -1,81 +1,103 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Button} from "react-bootstrap";
 import http from "../plugins/http";
 
 const Registration = () => {
 
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [inputStatus, setInputStatus] = useState('')
+    const [message, setMessage] = useState('')
+    const [messageClass, setMessageClass] = useState('text-danger')
 
+    const [nameClass, setNameClass] = useState('border-danger')
+    const [pass1Class, setPass1Class] = useState('border-danger')
+    const [pass2Class, setPass2Class] = useState('border-danger')
+    const [emailClass, setEmailClass] = useState('border-danger')
+    const [photoClass, setPhotoClass] = useState('border-danger')
 
     const nameRef = useRef();
-    const passRef = useRef();
+    const pass1Ref = useRef();
+    const pass2Ref = useRef();
     const emailRef = useRef();
     const photoRef = useRef();
 
-    const tomas = {
-        username: 'tomas',
-        password: 'aaaa',
-        email: 'tomas@aa.com',
-        photo: 'https://i.pinimg.com/originals/b7/d8/f0/b7d8f0520835df9547ce82ab56955110.jpg'
-    }
 
-    const isValid = (input) => {
-        let success;
-        if (input === 'name') success = Boolean(nameRef.current.value.length > 2 && nameRef.current.value.length < 25)
-        else if (input === 'password') success = Boolean(passRef.current.value.length > 2 && passRef.current.value.length < 25)
-        else if (input === 'email') success = Boolean(emailRef.current.value.includes('@'))
-        else if (input === 'photo') success = Boolean(photoRef.current.value.startsWith('http'))
-        return success? 'no-border':'border-danger'
-    }
-
-    const addUser = () => {
-
+    const validateUser = () => {
         setIsSubmitted(true);
 
-        if (isValid('name') === 'border-danger' ||
-            isValid('password') === 'border-danger' ||
-            isValid('email') === 'border-danger'||
-            isValid('photo') === 'border-danger') {
-            setInputStatus('Pataisykite paryskintus langelius')
-            return
+        if (nameRef.current.value.length >= 3 && nameRef.current.value.length <= 20)
+            setNameClass('border-success')
+        else setNameClass('border-danger')
+
+        if (pass1Ref.current.value.length >= 3 && pass1Ref.current.value.length <= 20)     setPass1Class('border-success')
+        else setPass1Class('border-danger')
+
+        if (pass1Ref.current.value === pass2Ref.current.value && pass2Ref.current.value !=='')     setPass2Class('border-success')
+        else setPass2Class('border-danger')
+
+        if (emailRef.current.value.includes('@'))
+            setEmailClass('border-success')
+        else setEmailClass('border-danger')
+
+        if (photoRef.current.value.startsWith('http'))
+            setPhotoClass('border-success')
+        else setPhotoClass('border-danger')
+    }
+
+
+    const submitUser = () => {
+        if (nameRef.current.value.length < 3 ||
+            nameRef.current.value.length > 20 ||
+            pass1Ref.current.value.length < 3 ||
+            pass1Ref.current.value.length > 20 ||
+            pass1Ref.current.value !== pass2Ref.current.value ||
+            pass2Ref.current.value ==='' ||
+            !emailRef.current.value.includes('@') ||
+            !photoRef.current.value.startsWith('http')
+        ) {
+            setMessageClass('text-danger')
+            setMessage('Pataisykite paryskintus langelius')
+                return
+            }
+        else {
+            setMessage('')
         }
-        else console.log('ivesta tinkamai, galime saugoti useri')
 
-
-        //reikia antro passwordsss
         const newUser = {
             username: nameRef.current.value,
-            password: passRef.current.value,
+            password1: pass1Ref.current.value,
+            password2: pass2Ref.current.value,
             email: emailRef.current.value,
             photo: photoRef.current.value,
         }
-
-        console.log('naujas useris', newUser)
 
         http.post('/register', newUser).then(res => {
             console.log(res)
             if (res.success) {
                 console.log('OK', res.user)
+                setMessageClass('text-success')
+                setMessage('Vartotojas užregistruotas')
             } else {
-
-            }
-            if (res.message === "Neteisingi prisijungimo duomenys") {
+                setMessageClass('text-danger')
+                setMessage(res.message)
             }
         })
     }
-
 
     return (
         <div className={'registration'}>
             <div className={'d-flex flex-column gap-2 w-50 p-5'}>
                 <div>Įveskite savo duomenis registracijai</div>
-                <input type="text" ref={nameRef} placeholder={'Vartotojo vardas...'} className={isSubmitted ? isValid('name') : 'no-border'}/>
-                <input type="password" ref={passRef} placeholder={'Slaptažodis...'} className={isSubmitted ? isValid('password') : 'no-border'}/>
-                <input type="email" ref={emailRef} placeholder={'el.paštas...'} className={isSubmitted ? isValid('email') : 'no-border'}/>
-                <input type="text" ref={photoRef} placeholder={'Nuotrauka (url)...'} className={isSubmitted ? isValid('photo') : 'no-border'}/>
-                <Button onClick={addUser}>Įvesti</Button>
-                <div className={'text-danger'}>{inputStatus}</div>
+                <input type="text" ref={nameRef} placeholder={'Vartotojo vardas...'} className={isSubmitted ? nameClass : 'no-border'} />
+                <input type="password" ref={pass1Ref} placeholder={'Slaptažodis...'} className={isSubmitted ? pass1Class : 'no-border'}/>
+                <input type="password" ref={pass2Ref} placeholder={'pakartokite slaptažodį...'} className={isSubmitted ? pass2Class : 'no-border'}/>
+                <input type="email" ref={emailRef} placeholder={'el.paštas...'} className={isSubmitted ? emailClass : 'no-border'}/>
+                <input type="text" ref={photoRef} placeholder={'Nuotrauka (url)...'} className={isSubmitted ? photoClass : 'no-border'}/>
+
+                <Button onClick={()=> {
+                    validateUser();
+                    submitUser();
+                }}>Įvesti</Button>
+                <div className={messageClass}>{message}</div>
             </div>
 
         </div>
