@@ -23,30 +23,25 @@ const FavoritesPage = () => {
         if (favoriteIds.length) {
             http.post('/get-favorites', favorites).then(res => {
                 if (res.success) {
-                    console.log(res)
                     setTopics(res.favoriteTopics)
-                } else {
-                    console.log('ten irgi nera megiamu temu')
                 }
             })
-        } else console.log('Cia nera megiamu temu')
-
+        }
     }
 
     return (
-        <div>
+        <div className={'container'}>
             <h2>Mėgstamiausios temos</h2>
             {(favoriteIds.length >0) &&
                 <>
                     <div className={'d-flex flex-column'}>
-                        {topics.map((topic)=><TopicCard topic={topic} key={topic._id}/>).reverse()}
+                        {topics.map((topic)=><TopicCard topic={topic} key={topic._id}/>)}
                     </div>
                 </>
             }
             {(favoriteIds.length === 0) &&
                 <div>Neturite megiamu temu</div>
             }
-
         </div>
     );
 };

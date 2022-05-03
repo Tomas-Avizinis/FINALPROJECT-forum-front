@@ -32,43 +32,37 @@ const IndexPage = () => {
     //     getTopics()
     // },[])
 
-    const getTopics = () => {
-
-        http.get('/get-topics').then(res => {
-            if (res.success) {
-                setTopics(res.allTopics)
-            } else {
-
-            }
-        })
-    }
+    useEffect(()=>{
+        if (!localStorage.getItem('favorites')) {
+            const values = [];
+            localStorage.setItem('favorites', JSON.stringify(values))
+        }
+    },[])
 
 
-    // ===GETTING PAGED PRODUCT OF CATEGORY
+    // ===GETTING PAGED TOPICS
     const openPage = (activePage) => {
         const sendData = {
             page: activePage,
-            // category: category,
             itemsInPage: itemsInPage,
         }
         http.post('/get-paged-topics', sendData).then(res => {
             if (res.success) {
                 setTopics(res.reversePagedTopics);
                 setTotalPages(res.totalPages);
-                // setSubcategoriesList(res.allPostsSubcategories)
             }
         })
     }
 
     return (
-        <div>
-            <h2>Index page, all topic will be here</h2>
+        <div className={'container'}>
+            <h2>Visos pokalbių temos kokios tik gali šauti į galvą</h2>
             <UploadTopic />
             {(topics.length!==0  && totalPages!==1) &&
                 <Pagination activePage={activePage} setActivePage={setActivePage} totalPages={totalPages} setItemsInPage={setItemsInPage}/>
             }
             <div className={'d-flex flex-column'}>
-                {topics.map((topic)=><TopicCard topic={topic} key={topic._id}/>).reverse()}
+                {topics.map((topic,i)=><TopicCard topic={topic} key={topic._id} />).reverse()}
             </div>
         </div>
     );

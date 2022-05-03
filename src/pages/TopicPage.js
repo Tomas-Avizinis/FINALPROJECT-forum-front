@@ -22,11 +22,9 @@ const TopicPage = () => {
     const [totalPages, setTotalPages] = useState(null);
     const [itemsInPage, setItemsInPage] = useState(4);
 
-    // console.log(comments)
-    // console.log('atidariau tema ir noriu matyti komentarus')
+
 
     useEffect(()=>{
-        console.log('ar veikia use effect?')
         getPagedComments(activePage)
     },[])
 
@@ -71,7 +69,6 @@ const TopicPage = () => {
 
         http.post('/get-paged-comments', sendData).then(res => {
             if (res.success) {
-                console.log('ar ateina komentarai?', res)
                 setComments(res.reversePagedComments);
                 setTotalPages(res.totalPages);
             }
@@ -79,7 +76,7 @@ const TopicPage = () => {
     }
 
     return (
-        <div>
+        <div className={'container'}>
             {singleTopic &&
                 <div>
                     <h2>TEMA: <b>{singleTopic.title}</b></h2>

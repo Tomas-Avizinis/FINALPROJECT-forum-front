@@ -46,16 +46,16 @@ const Login = () => {
     return (
         <div>
             <div className={'registration'}>
-                <div className={'d-flex flex-column gap-2 w-50 p-5'}>
+                <div className={'flex-col gap'}>
                     <div>Prisijunkite</div>
-                    <input type="text" ref={nameRef} placeholder={'Vartotojo vardas...'}  className={'no-border'}/>
-                    <input type="password" ref={passRef} placeholder={'Slaptažodis...'} className={'no-border'}/>
-                    <div className={'d-flex justify-content-center align-items-center gap-2'}>
+                    <input  type="text" ref={nameRef} placeholder={'Vartotojo vardas...'}  />
+                    <input  type="password" ref={passRef} placeholder={'Slaptažodis...'} />
+                    <div className={'flex just-center align-it-center gap'}>
                         <input type="checkbox" onClick={() => setStayLogged(!stayLogged)}/>
                         <div>Likti prisijungus</div>
                     </div>
 
-                    <Button onClick={()=> {
+                    <Button className={'submit active'} onClick={()=> {
                         loginUser();
                     }}>Prisijungti</Button>
                     <div className={messageClass}>{message}</div>

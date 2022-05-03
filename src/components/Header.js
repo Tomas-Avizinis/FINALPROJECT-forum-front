@@ -27,16 +27,36 @@ const Header = () => {
         }
     }
 
+    const logOut = () => {
+        setLoggedUser('');
+
+    }
+
+    const navigateToUserPage = () => {
+        nav('/user/'+ loggedUser.username)
+    }
+
     return (
-        <div className={'Header flex gap justify-content-between align-items-center'}>
+        <div className={'Header flex gap wrap justify-content-between align-items-center'}>
             <div className={'animated-logo'} onClick={()=>nav('/')} />
-            <div className={'flex gap'}>
-                {/*<button onClick={()=>nav('/')}>Main</button>*/}
-                <button onClick={()=>nav('/login')}>Prisijungti</button>
-                <button onClick={()=>nav('/register')}>Registracija</button>
+            <div className={'flex gap wrap'}>
+
+                {!loggedUser &&
+                    <>
+                        <button onClick={()=>nav('/login')}>Prisijungti</button>
+                        <button onClick={()=>nav('/register')}>Registracija</button>
+                    </>
+                }
                 <button onClick={()=>nav('/favorites')}>Mėgstamiausi</button>
+
                 {loggedUser &&
-                    <div className={'text-white'}><b>Hi, {loggedUser.username}</b></div>
+                    <button onClick={logOut}>Atsijungti</button>
+                }
+
+
+
+                {loggedUser &&
+                    <div className={'text-white'} onClick={navigateToUserPage}><b>Hi, {loggedUser.username}</b></div>
                 }
             </div>
 
