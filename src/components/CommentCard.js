@@ -7,7 +7,7 @@ const CommentCard = ({comment}) => {
 
     return (
         <div className={'comment-card'}>
-            <div className={'d-flex justify-content-between comment-info'} >
+            <div className={'flex just-spBTW comment-info'} >
                 <div>Autorius: <b>{comment.author}</b></div>
                 <div>&#128337; {fullDate(comment.time)}</div>
             </div>

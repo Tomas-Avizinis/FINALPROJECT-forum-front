@@ -15,23 +15,23 @@ const Pagination = ({activePage, setActivePage, totalPages}) => {
     }
 
     return (
-        <Container fluid={'sm'} className='mt-3'>
-            <div className={'d-flex justify-content-center align-items-center'}>
+        <div>
+            <div className={'flex'}>
                 {/*<div style={{width:'100px'}}/>*/}
-                <div className={'d-flex'}>
+                <div className={'flex'}>
                     {activePage!==1 &&
-                        <button className={'arrow'} onClick={()=>{changePage('previous')}} >&#129080;</button>
+                        <button className={'arrow page-button'} onClick={()=>{changePage('previous')}} >&#129080;</button>
                     }
 
                     {pages.map((p,i)=>
                         <button
-                            className={(i+1)===activePage? 'd-flex justify-content-center page-number active': 'page-number justify-content-center'}
+                            className={(i+1)===activePage? 'flex page-button page-number active': 'page-button page-number'}
                             key={i*2}
                             onClick={()=>{setActivePage(i+1)}}
                         >{i+1}</button>
                     )}
                     {activePage!==totalPages &&
-                        <button className={'arrow'} onClick={()=>{changePage('next')}}>&#129082;</button>
+                        <button className={'arrow page-button'} onClick={()=>{changePage('next')}}>&#129082;</button>
                     }
 
                 </div>
@@ -47,7 +47,7 @@ const Pagination = ({activePage, setActivePage, totalPages}) => {
                 {/*    </select>*/}
                 {/*</div>*/}
             </div>
-        </Container>
+        </div>
     );
 };
 

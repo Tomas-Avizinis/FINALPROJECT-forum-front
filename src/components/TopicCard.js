@@ -2,8 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import MainContext from "../context/MainContext";
 
-const TopicCard = ({topic}) => {
-
+const TopicCard = ({topic, comments}) => {
     const {fullDate} = useContext(MainContext);
     const [favorite, setFavorite] = useState(false);
     const favoriteClass = favorite? 'favorite' : 'not-favorite'
@@ -40,34 +39,45 @@ const TopicCard = ({topic}) => {
 
     return (
         <div className={'topic-card'} onClick={navigateToTopic}>
-            <div className={'d-flex justify-content-between'}>
-                <div><b>🗪 {topic.title}</b></div>
+            <div className={'flex just-spBTW topic-info'}>
+                <div><b>{topic.author}</b> </div>
                 <div>&#128337; {fullDate(topic.time)}  </div>
+                <div>{topic.comments? `Komentarai: ${topic.comments}` : 'Komentarų nėra'}</div>
                 <div onClick={(e)=>{
                     e.stopPropagation();
                     handleFavorites();
                 }} className={favoriteClass}>🎔</div>
-                <div>Sukūrė: {topic.author}</div>
+
+            </div>
+            <div className={'flex-col just-spBTW wrap align-items-stretch'}>
+                <div className={'topic-content wrap'}>
+                    <div className={'topic-title'}>
+                        <span className={'color-icon'}> 🗭</span>
+                        <b> {topic.title}</b></div>
+                    <div className={'topic-text wrap'}> {topic.text}</div>
+                </div>
+
+                <div className={'topic-media'}>
+                    <div className={'flex wrap'}>
+                        {topic.links &&
+                            <>
+                                {topic.links.map((link, i) =>
+                                    <div className={'comment-link'} key={link} style={{backgroundImage: `url('${link}')`}}></div>
+                                )}
+                            </>
+                        }
+                        {topic.videolinks &&
+                            <>
+                                {topic.videolinks.map((link, i) =>
+                                    <iframe key={link} className={'comment-video'} src={`//www.youtube.com/embed/${link}`}  allowFullScreen></iframe>
+                                )}
+                            </>
+                        }
+                    </div>
+                </div>
             </div>
 
-            <div>🖹 {topic.text}</div>
 
-            <div className={'flex wrap'}>
-                {topic.links &&
-                    <>
-                        {topic.links.map((link, i) =>
-                            <div className={'comment-link'} key={link} style={{backgroundImage: `url('${link}')`}}></div>
-                        )}
-                    </>
-                }
-                {topic.videolinks &&
-                    <>
-                        {topic.videolinks.map((link, i) =>
-                            <iframe key={link} className={'comment-video'} src={`//www.youtube.com/embed/${link}`}  allowFullScreen></iframe>
-                        )}
-                    </>
-                }
-            </div>
 
         </div>
     );

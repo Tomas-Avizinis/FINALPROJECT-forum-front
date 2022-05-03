@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Josefin+Sans&display=swap');
 
-
 * {
   box-sizing: border-box;
   font-family: 'Comfortaa', cursive;
+  word-wrap: break-word;
 }
 
 
@@ -34,9 +34,29 @@
 .left {align-items: flex-start}
 .w100proc {width: 100%}
 
+.just-center {justify-content:center;}
+.just-spBTW {justify-content: space-between;}
+.just-spEVN {justify-content: space-evenly;}
+.just-spARND {justify-content: space-around;}
+.just-stretch {justify-content: stretch}
+.just-start {justify-content: start;}
+.just-end {justify-content: end;}
+.just-L {justify-content: left;}
+.just-R {justify-content: right;}
+
+.align-it-center {align-items: center;}
+.align-it-stretch {align-items: stretch;}
+.align-it-start {align-items: start;}
+.align-it-end {align-items: end;}
+
 h1, h2, h3, h4, h5, h6, p {
-  margin: 0;
+  margin-bottom: 30px;
   padding: 0;
+}
+.container {
+  padding: 25px;
+  width: 80%;
+  margin: auto;
 }
 
 
@@ -45,6 +65,8 @@ h1, h2, h3, h4, h5, h6, p {
   padding: 0 25px 0 0;
   border: 1px solid black;
   justify-content: space-between;
+  border-bottom: 2px solid coral;
+  color: coral;
 }
 .animated-logo {
   width: 300px;
@@ -59,8 +81,9 @@ button {
   border: 1px dashed white;
   border-radius: 10px !important;
   padding: 10px 30px;
-  color: white;
+  color: coral;
 }
+
 .header-title {
   text-transform: uppercase;
   font-family: 'Josefin Sans', sans-serif;
@@ -68,16 +91,122 @@ button {
 .registration{
   background-color: silver;
 }
+input{
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px 20px;
+  border-radius: 5px;
+  border: 2px inset;
+  border-bottom: 2px solid coral;
+  background-color: none;
+  word-wrap: break-word;
+}
+input.text {
+  min-height: 120px;
+  word-wrap: break-word;
+}
+button.submit {
+  width: 100%;
+  border: none;
+  background-color: grey;
+  color: white;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+button.active{
+  background-color: coral;
+}
+
+button.submit:hover{
+  background-color: coral;
+}
+button.user-links {
+  color: white;
+  border: none;
+}
+
+.container-closed {
+  height: 10px;
+  overflow: hidden;
+  margin-bottom: -20px;
+  transition:  1s;
+}
+.container-open {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  transition:  1s;
+  font-size: 1.2em;
+}
+.inputs-closed{
+  height: 5px;
+  overflow: hidden;
+  margin: 0;
+  transition: height 1s;
+}
+.inputs-open{
+  height: auto;
+  margin: 0;
+  transition: height 1s;
+}
+
+.favorite {
+  /*background-color: darkkhaki;*/
+   width: 1px;
+   height: 1px;
+   top: -25px;
+   right: 35px;
+   position: absolute;
+   font-size: 2.2em;
+   color: coral;
+   cursor: pointer;
+ }
+.not-favorite {
+  /*background-color: darkkhaki;*/
+  width: 1px;
+  height: 1px;
+  top: -2px;
+  right: 30px;
+  position: absolute;
+  font-size: 1.1em;
+  color: lightgrey;
+  cursor: pointer;
+}
 .topic-card {
-  margin: 5px;
-  padding: 10px;
-  background-color: cadetblue;
-  border: 1px solid black;
+  position: relative;
+  margin-bottom: 20px;
+  background-color: rgba(192, 192, 192, 0.3);
+  border-radius: 4px;
+}
+.topic-info {
+  padding: 2px 50px 2px 20px;
+  background-color: dimgray;
+  color: white;
+}
+.topic-content{
+  height: 100%;
+  max-width: 70%;
+  padding: 10px 25px;
+  align-items: flex-start;
+}
+.topic-title {
+  font-size: 1.8em;
+  font-weight: 800;
+  padding: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid black;
+}
+.topic-text {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+.topic-media {
+  width: 30%;
+  max-width: 300px;
 }
 .comment-card {
   margin: 5px;
-  /*background-color: cornsilk;*/
-  /*border: 1px solid black;*/
 }
 .comment-info {
   padding: 2px 10px;
@@ -104,29 +233,23 @@ button {
   frameBorder: 0;
 }
 
-input {
-  border-radius: 10px;
-  padding: 4px 20px;
-  /*border: transparent;*/
-  background-color: #d0d0d0;
-}
+
 .no-border {
-  border: silver
+  border: silver;
 }
-.favorite {
-  font-size: 2em;
-  color: red;
-  cursor: pointer;
-}
-.not-favorite {
-  font-size: 2em;
-  color: gray;
-  cursor: pointer;
+span.color-icon{
+  color: coral;
 }
 
 /*PAGINATION STYLES*/
+.page-button {
+  padding: 0;
+  color: black;
+  /*color: coral;*/
+}
+
 .page-number {
-  margin: 10px;
+  /*margin: 10px;*/
   font-weight: 300;
   cursor: pointer;
   width: 30px;
@@ -144,17 +267,13 @@ input {
 .page-number.active {
   background-color: silver;
   color: white;
-  /*border-radius: 50%;*/
   width: 30px;
   height: 30px;
   font-weight: 900;
-  font-size: 1.1em;
-  /*transition: 3s;*/
 }
 .arrow {
   border: none;
   background-color: transparent;
   font-size: 2em;
   border-radius: 5px;
-  background-color: transparent;
 }

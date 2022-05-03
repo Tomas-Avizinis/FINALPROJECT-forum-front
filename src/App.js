@@ -9,13 +9,13 @@ import RegisterPage from "./pages/RegisterPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import TopicPage from "./pages/TopicPage";
 import {useState} from "react";
+import UserPage from "./pages/UserPage";
 
 
 
 function App() {
 
     const [topics, setTopics] = useState([])
-    // const [comments, setComments] = useState([]);
     const [loggedUser, setLoggedUser] = useState('')
 
     const fullDate = (timestamp) => {
@@ -43,6 +43,7 @@ function App() {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/tema/:topicIdTitle' element={<TopicPage />} />
+            <Route path='/user/:userName' element={<UserPage />} />
           </Routes>
 
         </BrowserRouter>
