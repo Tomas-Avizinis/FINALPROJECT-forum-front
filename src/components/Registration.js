@@ -1,9 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Button} from "react-bootstrap";
 import http from "../plugins/http";
+import {useNavigate} from "react-router-dom";
 
 const Registration = () => {
 
+    const nav = useNavigate();
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [message, setMessage] = useState('')
     const [messageClass, setMessageClass] = useState('text-danger')
@@ -25,22 +27,22 @@ const Registration = () => {
         setIsSubmitted(true);
 
         if (nameRef.current.value.length >= 3 && nameRef.current.value.length <= 20)
-            setNameClass('border-success')
-        else setNameClass('border-danger')
+            setNameClass('good')
+        else setNameClass('bad')
 
-        if (pass1Ref.current.value.length >= 3 && pass1Ref.current.value.length <= 20)     setPass1Class('border-success')
-        else setPass1Class('border-danger')
+        if (pass1Ref.current.value.length >= 3 && pass1Ref.current.value.length <= 20)     setPass1Class('good')
+        else setPass1Class('bad')
 
-        if (pass1Ref.current.value === pass2Ref.current.value && pass2Ref.current.value !=='')     setPass2Class('border-success')
-        else setPass2Class('border-danger')
+        if (pass1Ref.current.value === pass2Ref.current.value && pass2Ref.current.value !=='')     setPass2Class('good')
+        else setPass2Class('bad')
 
         if (emailRef.current.value.includes('@'))
-            setEmailClass('border-success')
-        else setEmailClass('border-danger')
+            setEmailClass('good')
+        else setEmailClass('bad')
 
         if (photoRef.current.value.startsWith('http'))
-            setPhotoClass('border-success')
-        else setPhotoClass('border-danger')
+            setPhotoClass('good')
+        else setPhotoClass('bad')
     }
 
 
@@ -55,7 +57,7 @@ const Registration = () => {
             !photoRef.current.value.startsWith('http')
         ) {
             setMessageClass('text-danger')
-            setMessage('Pataisykite paryskintus langelius')
+            setMessage('Užpildykite visus laukelius')
                 return
             }
         else {
@@ -76,6 +78,7 @@ const Registration = () => {
                 console.log('OK', res.user)
                 setMessageClass('text-success')
                 setMessage('Vartotojas užregistruotas')
+                nav('/login');
             } else {
                 setMessageClass('text-danger')
                 setMessage(res.message)
@@ -84,22 +87,21 @@ const Registration = () => {
     }
 
     return (
-        <div className={'registration'}>
-            <div className={'d-flex flex-column gap-2 w-50 p-5'}>
-                <div>Įveskite savo duomenis registracijai</div>
-                <input type="text" ref={nameRef} placeholder={'Vartotojo vardas...'} className={isSubmitted ? nameClass : 'no-border'} />
-                <input type="password" ref={pass1Ref} placeholder={'Slaptažodis...'} className={isSubmitted ? pass1Class : 'no-border'}/>
-                <input type="password" ref={pass2Ref} placeholder={'pakartokite slaptažodį...'} className={isSubmitted ? pass2Class : 'no-border'}/>
-                <input type="email" ref={emailRef} placeholder={'el.paštas...'} className={isSubmitted ? emailClass : 'no-border'}/>
-                <input type="text" ref={photoRef} placeholder={'Nuotrauka (url)...'} className={isSubmitted ? photoClass : 'no-border'}/>
+        <div className={'container'}>
+            <div className={'flex flex-col gap'}>
+                    <div>Įveskite savo duomenis</div>
+                    <input type="text" ref={nameRef} placeholder={'Vartotojo vardas...'} className={isSubmitted && nameClass} />
+                    <input type="password" ref={pass1Ref} placeholder={'Slaptažodis...'} className={isSubmitted && pass1Class}/>
+                    <input type="password" ref={pass2Ref} placeholder={'pakartokite slaptažodį...'} className={isSubmitted && pass2Class}/>
+                    <input type="email" ref={emailRef} placeholder={'el.paštas...'} className={isSubmitted && emailClass}/>
+                    <input type="text" ref={photoRef} placeholder={'Nuotrauka (url)...'} className={isSubmitted && photoClass}/>
 
-                <Button onClick={()=> {
-                    validateUser();
-                    submitUser();
-                }}>Įvesti</Button>
-                <div className={messageClass}>{message}</div>
-            </div>
-
+                    <Button onClick={()=> {
+                        validateUser();
+                        submitUser();
+                    }} className={'submit active'}>Registruotis</Button>
+                    <div className={messageClass}>{message}</div>
+                </div>
         </div>
     );
 };

@@ -10,6 +10,8 @@ import Pagination from "../components/Pagination";
 
 const TopicPage = () => {
 
+    const {loggedUser} = useContext(MainContext);
+
     const [comments, setComments] = useState([])
     const [newComment, setNewComment] = useState(false)
 
@@ -81,7 +83,10 @@ const TopicPage = () => {
                 <div>
                     <h2>TEMA: <b>{singleTopic.title}</b></h2>
                     <TopicCard topic={singleTopic}/>
-                    <UploadComment topicId={singleTopic._id} setNewComment={setNewComment} />
+                    {loggedUser &&
+                        <UploadComment topicId={singleTopic._id} setNewComment={setNewComment} />
+                    }
+
 
                     {(comments.length!==0  && totalPages!==1) &&
                         <Pagination activePage={activePage} setActivePage={setActivePage} totalPages={totalPages} setItemsInPage={setItemsInPage}/>

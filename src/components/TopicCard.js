@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import MainContext from "../context/MainContext";
 
 const TopicCard = ({topic, comments}) => {
+
     const {fullDate} = useContext(MainContext);
     const [favorite, setFavorite] = useState(false);
     const favoriteClass = favorite? 'favorite' : 'not-favorite'
@@ -52,7 +53,7 @@ const TopicCard = ({topic, comments}) => {
             <div className={'flex-col just-spBTW wrap align-items-stretch'}>
                 <div className={'topic-content wrap'}>
                     <div className={'topic-title'}>
-                        <span className={'color-icon'}> 🗭</span>
+                        {/*<span className={'color-icon'}> 🗭 </span>*/}
                         <b> {topic.title}</b></div>
                     <div className={'topic-text wrap'}> {topic.text}</div>
                 </div>
