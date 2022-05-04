@@ -1,10 +1,12 @@
 import React, {useContext, useRef, useState} from 'react';
-import {Button} from "react-bootstrap";
 import http from "../plugins/http";
 import MainContext from "../context/MainContext";
+import {useNavigate} from "react-router-dom";
 
 
 const Login = () => {
+
+    const nav = useNavigate();
 
     const {setLoggedUser} = useContext(MainContext);
 
@@ -14,7 +16,6 @@ const Login = () => {
 
     const nameRef = useRef();
     const passRef = useRef();
-    const stayLoggedRef = useRef();
 
     const loginUser = () => {
         const user = {
@@ -35,6 +36,7 @@ const Login = () => {
                     localStorage.removeItem('stayLogged')
                     localStorage.removeItem('userId')
                 }
+                nav('/')
             } else {
                 setMessageClass('text-danger')
                 setMessage(res.message)
@@ -44,24 +46,23 @@ const Login = () => {
 
 
     return (
-        <div>
-            <div className={'registration'}>
-                <div className={'flex-col gap'}>
+        <div className={'container'}>
+            <div className={'flex-col gap'}>
                     <div>Prisijunkite</div>
                     <input  type="text" ref={nameRef} placeholder={'Vartotojo vardas...'}  />
                     <input  type="password" ref={passRef} placeholder={'Slaptažodis...'} />
-                    <div className={'flex just-center align-it-center gap'}>
+
+                    <div className={'flex'}>
                         <input type="checkbox" onClick={() => setStayLogged(!stayLogged)}/>
                         <div>Likti prisijungus</div>
                     </div>
 
-                    <Button className={'submit active'} onClick={()=> {
+
+                    <button className={'submit active'} onClick={()=> {
                         loginUser();
-                    }}>Prisijungti</Button>
+                    }}>Prisijungti</button>
                     <div className={messageClass}>{message}</div>
                 </div>
-
-            </div>
         </div>
     );
 };

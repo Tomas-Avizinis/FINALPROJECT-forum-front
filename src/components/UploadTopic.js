@@ -22,6 +22,12 @@ const UploadTopic = () => {
         }
     }
 
+    const closeInputs = () => {
+        setWrite(!write);
+        topicTitleRef.current.value = '';
+        topicTextRef.current.value = '';
+    }
+
     useEffect(()=>{
         setContainerInputsClass(write? 'container-open': 'container-closed')
     },[write])
@@ -43,19 +49,25 @@ const UploadTopic = () => {
             } else {
                 console.log(res.message)
             }
-
         })
     }
 
     return (
-        <div className={'flex-column justify-content-center gap w-50'}>
+        <div className={'flex-col just-center gap '}>
             <div className={inputsContainerClass}>
                 <input type="text" ref={topicTitleRef} placeholder={'Temos pavadinimas...'}/>
                 <input type="text" className={'text'} ref={topicTextRef} placeholder={'Temos tekstas...'}/>
             </div>
 
-            <button className={write? 'submit active' : 'submit'} onClick={openInputs}>
-                {write? 'Paskelbti': 'Kurti naują temą'}</button>
+            <button className={write? 'flex just-spBTW submit active' : ' flex submit just-spBTW'} style={{zIndex:'10'}} onClick={openInputs}>
+
+                {write? 'Paskelbti': 'Kurti naują temą'}
+
+                {write &&
+                    <div onClick={closeInputs}>X</div>
+                }
+
+            </button>
         </div>
     );
 };

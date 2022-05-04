@@ -10,6 +10,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import TopicPage from "./pages/TopicPage";
 import {useState} from "react";
 import UserPage from "./pages/UserPage";
+import http from "./plugins/http";
 
 
 
@@ -25,13 +26,24 @@ function App() {
         return `${date.toLocaleDateString()} ${hours}:${minutes}`
     }
 
+    const getUser = (userId) => {
+        const user = {userId: userId}
+
+        http.post('/get-user', user).then(res => {
+            if (res.success) {
+                return res.user
+            }
+        })
+    }
+
+
 
 
   return (
       <MainContext.Provider value={{
         topics, setTopics,
         loggedUser, setLoggedUser,
-        fullDate,
+        fullDate, getUser
       }}>
 
         <BrowserRouter>
